@@ -17,7 +17,7 @@ def initializeNeuralNetwork(a,b,c):
     initialTheta1 = np.random.rand(input_layer_size,hidden_layer_size)
     initialTheta2 = np.random.rand(hidden_layer_size,output_layer_size)
 
-    initialNNParams = rollParams(initialTheta1,initialTheta2) #TODO figure out function unrolling/rolling
+    initialNNParams = rollParams(initialTheta1,initialTheta2) 
     return initialNNParams
 
 def rollParams(t1,t2):
@@ -29,7 +29,7 @@ def unrollParams(tlarge):
     t2 = tlarge[t1index:].reshape(hidden_layer_size,output_layer_size)    
     return(t1,t2)
 
-def feedForward(Theta1, Theta2, X): #where Theta1 and Theta2 are hypothesis arrays and X is the training set
+def predict(Theta1, Theta2, X): #where Theta1 and Theta2 are hypothesis arrays and X is the training set
     m = input_layer_size
     num_labels = output_layer_size 
 
@@ -41,7 +41,18 @@ def feedForward(Theta1, Theta2, X): #where Theta1 and Theta2 are hypothesis arra
 
     h1 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,X],1), Theta1))
     h2 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,h1],1), Theta2))
-    p = 
+    p[np.argmax(h2)] =1
+    return p
 
+def costFunction(X,y,tlarge,epsilon):
+    Theta1 = unrollParams(tlarge)[0]
+    Theta2 = unrollParams(tlarge)[1]
+
+    J = 0
+    
+    Theta1_grad = np.zeros((Theta1.shape))
+    Theta2_grad = np.zeros((Theta2.shape))
+    
+    A1 = np.concatenate()
 initializeNeuralNetwork(400,200,86)
 
