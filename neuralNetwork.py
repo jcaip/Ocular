@@ -1,13 +1,12 @@
 import scipy as sp
 import numpy as np
 
-
-def sigmoid(z):
-    return 1/(1+np.exp(-z))
-
 input_layer_size=0
 hidden_layer_size=0
 output_layer_size=0
+
+def sigmoid(z):
+    return 1/(1+np.exp(-z))
 
 def initializeNeuralNetwork(a,b,c):
     input_layer_size = a
@@ -30,13 +29,13 @@ def unrollParams(tlarge):
     return(t1,t2)
 
 def predict(Theta1, Theta2, X): #where Theta1 and Theta2 are hypothesis arrays and X is the training set
-    m = input_layer_size
     num_labels = output_layer_size 
+    m = input_layer_size
 
     p = np.zeros(m,1)
+    
 
     sigmoidVectorized = np.vectorize(sigmoid)
-    
     biasTerm = np.ones((m,1))
 
     h1 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,X],1), Theta1))
@@ -48,11 +47,19 @@ def costFunction(X,y,tlarge,epsilon):
     Theta1 = unrollParams(tlarge)[0]
     Theta2 = unrollParams(tlarge)[1]
 
+    m = input_layer_size
     J = 0
     
     Theta1_grad = np.zeros((Theta1.shape))
     Theta2_grad = np.zeros((Theta2.shape))
     
-    A1 = np.concatenate()
-initializeNeuralNetwork(400,200,86)
+    sigmoidVectorized = np.vectorize(sigmoid)
+    biasTerm = np.ones((m,1))
 
+    A1 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,X],1), Theta1))
+    h2 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,h1],1), Theta2))
+    
+        
+        
+print(initializeNeuralNetwork(400,200,86))
+sp.io.loadmat()
