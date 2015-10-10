@@ -63,7 +63,6 @@ class NeuralNetwork:
         return J
 
     def costFunctionGradient(self, *args):
-        print((args[0]))
         fthis, X, y, tlarge, epsilon  = args
         
         Theta1 = self.unrollParams(fthis)[0]
@@ -106,7 +105,7 @@ class NeuralNetwork:
         num_labels = self.output_layer_size 
         m = self.X.shape[0]
 
-        sigmoidVectorized = np.vectorize(sigmoid)
+        sigmoidVectorized = np.vectorize(self.sigmoid)
         biasTerm = np.ones((m,1))
         
         h1 = sigmoidVectorized(np.dot(np.concatenate([biasTerm,X],1), Theta1))
@@ -117,8 +116,12 @@ class NeuralNetwork:
         #print(self.costFunctionGradient().shape)
         #print(self.tlarge.shape)
         args = (self.X, self.y, self.tlarge, self.epsilon)
-        result = spo.fmin_cg(self.costFunction,np.ndarray.flatten(self.tlarge), fprime=self.costFunctionGradient, args=args)
-        return result
+        result = spo.fmin_cg(self.costFunction,np.ndarray.flatten(self.tlarge), fprime=self.costFunctionGradient, args=args,maxiter=10)
+        C = self.predict(self.unrollParams(result)[0],self.unrollParams(result)[1],self.X)
+        print(C.shape)
+        print(self.y)
+        print(C)
+        return np.mean(np.round(C)-self.y)
 
     def __init__(self,b,c,trainingset,labels):
         self.input_layer_size = trainingset.shape[1]
@@ -132,5 +135,7 @@ testSet = spi.loadmat('testweights.m')
 tsd = testSet['X']
 tsl = testSet['y']
 nnTest = NeuralNetwork(50,10,tsd,tsl);
+print(tsl.shape)
+print("breaker")
 print(nnTest.train())
 
