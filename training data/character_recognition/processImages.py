@@ -1,3 +1,4 @@
+import scipy.io as spi
 import os
 import numpy
 import matplotlib.image as mpimg
@@ -22,8 +23,8 @@ def imagePreProcessing():
     for i in range(0,len(allImages)):
         trainingData[i,:] = numpy.resize(numpy.array(greyscaleImageFile(allImages[i])),400)
         trainingLabels[i] = allImages[i][5]
-    numpy.save("trainingData.npy",trainingData)
-    numpy.save("trainingLabels.npy",trainingLabels)
+    trainingData = {'X':trainingData,'y':trainingLabels}
+    spi.savemat("trainingData.mat",trainingData)
 
 imagePreProcessing()
 
